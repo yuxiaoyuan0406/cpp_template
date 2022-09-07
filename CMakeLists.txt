@@ -6,11 +6,11 @@ enable_testing()
 
 find_package(Threads REQUIRED)
 
-add_executable(${PROJECT_NAME} main.cpp)
+aux_source_directory(. ROOT_SRC)
 
-target_link_libraries(
+add_executable(
     ${PROJECT_NAME}
-    ${CMAKE_THREAD_LIBS_INIT}
+    ${ROOT_SRC}
 )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
