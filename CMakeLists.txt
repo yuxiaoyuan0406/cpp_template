@@ -13,6 +13,11 @@ add_executable(
     ${ROOT_SRC}
 )
 
+target_link_libraries(
+    ${PROJECT_NAME} 
+    ${CMAKE_THREAD_LIBS_INIT}
+)
+
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
