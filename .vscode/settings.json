@@ -3,5 +3,6 @@
     "cmake.sourceDirectory": "${workspaceFolder}/.",
     "files.associations": {
         "thread": "cpp"
-    }
+    },
+    "cmake.cmakePath": "/home/dennis/anaconda3/envs/yolov7/bin/cmake" // specify cmake path for workspace to use cmake from a virtural env
 }

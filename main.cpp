@@ -1,39 +1,44 @@
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+#include <vector>
 #include <cstdio>
-#include <thread>
 
-// void left_hand()
-// {
-//     putchar('a');
-// }
-
-// void right_hand()
-// {
-//     putchar('m');
-//     putchar('i');
-//     putchar('n');
-// }
-
-void hand(char *s)
+int main (int argc, char **argv)
 {
-    for (; *s; s++)
-    {
-        putchar(*s);
-    }
-}
+	auto image = cv::imread(argv[1], cv::IMREAD_COLOR );
 
-int main(int argc, char **argv)
-{
-    if (argc < 3)
-    {
-        fprintf(stderr, "too less arguments\n");
-        return 0;
-    }
-    std::thread right_hand_thread([argv]()
-                                  { hand(argv[1]); });
-    std::thread left_hand_thread([argv]()
-                                  { hand(argv[2]); });
-    left_hand_thread.join();
-    right_hand_thread.join();
+	if (argc != 2 || !image.data) {
+		fprintf(stdout, "No image data\n");
+		return -1;
+	}
 
-    return 0;
+	cv::Mat image_gray;
+	cv::cvtColor(image, image_gray, cv::COLOR_RGB2GRAY);
+	// 如果想在图形界面查看图像对比可以取消这几行行的注释
+	cv::namedWindow("image", cv::WINDOW_AUTOSIZE);
+	cv::namedWindow("image gray", cv::WINDOW_AUTOSIZE);
+
+	cv::imshow("image", image);
+	cv::imshow("image gray", image_gray);
+
+	try
+	{
+		std::vector<int> compression_params;
+		compression_params.push_back(cv::IMWRITE_JPEG_QUALITY);
+		compression_params.push_back(95);
+		cv::imwrite("out.jpg", image_gray, compression_params);
+	}
+	catch (std::runtime_error& ex)
+	{
+		fprintf(stderr, "Exception converting image to JPG format: %s\n", ex.what());
+		return 1;
+	}
+
+	fprintf(stdout, "Saved JPG file gray\n");
+
+	cv::waitKey(0);
+    cv::destroyAllWindows();
+	return 0;
 }

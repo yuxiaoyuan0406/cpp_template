@@ -8,8 +8,7 @@
             // Resolved by CMake Tools:
             "program": "${command:cmake.launchTargetPath}",
             "args": [
-                "noshit",
-                "wtf"
+                "/home/dennis/Program/rolov7/yolov7/deploy/triton-inference-server/data/dog.jpg"
             ],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
